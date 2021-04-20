@@ -4,6 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import SignIn from '../pages/SignIn';
 import SignUp from '../pages/SignUp';
 import RoomList from '../pages/RoomList';
+import RoomDetail from '../pages/RoomDetail';
 
 const Auth = createStackNavigator();
 
@@ -17,6 +18,7 @@ const AuthRoutes: FC = () => (
     <Auth.Screen name="SignIn" component={SignIn} />
     <Auth.Screen name="SignUp" component={SignUp} />
     <Auth.Screen name="RoomList" component={RoomList} />
+    <Auth.Screen name="RoomDetail" component={RoomDetail} />
   </Auth.Navigator>
 );
 

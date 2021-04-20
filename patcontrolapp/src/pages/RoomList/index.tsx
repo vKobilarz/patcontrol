@@ -1,8 +1,9 @@
 import React, { FC, useState } from 'react';
 import { ScrollView } from 'react-native-gesture-handler';
+import { useNavigation } from '@react-navigation/native';
 import moment from 'moment';
 
-import CardContainer from '../../components/CardContainer';
+import CardButtonContainer from '../../components/CardButtonContainer';
 import CardBody from '../../components/CardBody';
 import CardRow from '../../components/CardRow';
 import CardText from '../../components/CardText';
@@ -11,26 +12,13 @@ import PageContainer from '../../components/PageContainer';
 import PageTitleContainer from '../../components/PageTitleContainer';
 import PageTitle from '../../components/PageTitle';
 
-interface Room {
-  name: string;
-  rfid?: string;
-  patrimony: {
-    total: number;
-    scanned: number;
-    notFound: number;
-    notRegistered: number;
-    lastScan: Date;
-  };
-  status: {
-    hasError: boolean;
-  };
-}
+import Room from '../../interfaces/Room';
 
 const roomsTest: Room[] = [
   {
     name: 'C102',
     rfid: '123',
-    patrimony: {
+    info: {
       total: 30,
       scanned: 22,
       notFound: 3,
@@ -43,7 +31,7 @@ const roomsTest: Room[] = [
   },
   {
     name: 'C103',
-    patrimony: {
+    info: {
       total: 40,
       scanned: 33,
       notFound: 6,
@@ -56,7 +44,7 @@ const roomsTest: Room[] = [
   },
   {
     name: 'C104',
-    patrimony: {
+    info: {
       total: 23,
       scanned: 22,
       notFound: 1,
@@ -70,7 +58,7 @@ const roomsTest: Room[] = [
   {
     name: 'C105',
     rfid: '1489',
-    patrimony: {
+    info: {
       total: 30,
       scanned: 30,
       notFound: 0,
@@ -85,6 +73,7 @@ const roomsTest: Room[] = [
 
 const RoomList: FC = () => {
   const [rooms, setRooms] = useState<Room[]>(roomsTest);
+  const navigation = useNavigation();
 
   return (
     <PageContainer>
@@ -96,31 +85,36 @@ const RoomList: FC = () => {
         keyboardShouldPersistTaps="handled"
       >
         {rooms.map((room) => (
-          <CardContainer key={room.name}>
+          <CardButtonContainer
+            key={room.name}
+            onPress={() => {
+              navigation.navigate('RoomDetail');
+            }}
+          >
             <CardTitle error={room.status.hasError}>{room.name}</CardTitle>
             <CardBody>
               <CardRow>
                 <CardText>Encontrados:</CardText>
-                <CardText>{room.patrimony.scanned}</CardText>
+                <CardText>{room.info.scanned}</CardText>
               </CardRow>
               <CardRow>
                 <CardText>Não Encontrados:</CardText>
-                <CardText>{room.patrimony.notFound}</CardText>
+                <CardText>{room.info.notFound}</CardText>
               </CardRow>
               <CardRow>
                 <CardText>Não Registrados:</CardText>
-                <CardText>{room.patrimony.notRegistered}</CardText>
+                <CardText>{room.info.notRegistered}</CardText>
               </CardRow>
               <CardRow>
                 <CardText>Total:</CardText>
-                <CardText>{room.patrimony.total}</CardText>
+                <CardText>{room.info.total}</CardText>
               </CardRow>
               <CardRow>
                 <CardText>Último Scan:</CardText>
                 <CardText>{moment().format('HH:mm DD/MM/YYYY')}</CardText>
               </CardRow>
             </CardBody>
-          </CardContainer>
+          </CardButtonContainer>
         ))}
       </ScrollView>
     </PageContainer>
