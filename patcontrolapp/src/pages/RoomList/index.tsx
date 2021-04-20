@@ -2,16 +2,14 @@ import React, { FC, useState } from 'react';
 import { ScrollView } from 'react-native-gesture-handler';
 import moment from 'moment';
 
-import {
-  CardBody,
-  CardContainer,
-  CardRow,
-  CardText,
-  CardTitle,
-  Container,
-  RoomListTitle,
-  RoomListTitleContainer,
-} from './styles';
+import CardContainer from '../../components/CardContainer';
+import CardBody from '../../components/CardBody';
+import CardRow from '../../components/CardRow';
+import CardText from '../../components/CardText';
+import CardTitle from '../../components/CardTitle';
+import PageContainer from '../../components/PageContainer';
+import PageTitleContainer from '../../components/PageTitleContainer';
+import PageTitle from '../../components/PageTitle';
 
 interface Room {
   name: string;
@@ -89,10 +87,10 @@ const RoomList: FC = () => {
   const [rooms, setRooms] = useState<Room[]>(roomsTest);
 
   return (
-    <Container>
-      <RoomListTitleContainer>
-        <RoomListTitle>Salas</RoomListTitle>
-      </RoomListTitleContainer>
+    <PageContainer>
+      <PageTitleContainer>
+        <PageTitle>Salas</PageTitle>
+      </PageTitleContainer>
       <ScrollView
         style={{ width: '100%', marginTop: 8 }}
         keyboardShouldPersistTaps="handled"
@@ -125,7 +123,7 @@ const RoomList: FC = () => {
           </CardContainer>
         ))}
       </ScrollView>
-    </Container>
+    </PageContainer>
   );
 };
 
