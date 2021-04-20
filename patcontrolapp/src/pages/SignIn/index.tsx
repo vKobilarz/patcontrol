@@ -49,16 +49,11 @@ const SignIn: FC = () => {
         password: Yup.string().required('Senha obrigatória'),
       });
 
-      await schema.validate(data, {
+      /*await schema.validate(data, {
         abortEarly: false,
-      });
+      });*/
 
-      // await signIn({
-      //   email: data.email,
-      //   password: data.password,
-      // });
-
-      // history.push('/dashboard');
+      navigation.navigate('RoomList');
     } catch (err) {
       if (err instanceof Yup.ValidationError) {
         const errors = getValidationsErrors(err);
@@ -133,12 +128,12 @@ const SignIn: FC = () => {
       </KeyboardAvoidingView>
 
       <CreateAccountContainer>
-        <CreateAccountButton onPress={() => {}}>
-          <Icon name="wifi-off" size={20} color="#ff9000" />
+        <CreateAccountButton onPress={() => navigation.navigate('RoomList')}>
+          <Icon name="wifi-off" size={20} color="#FFAA00" />
           <CreateAccountButtonText>Modo Offline</CreateAccountButtonText>
         </CreateAccountButton>
         <CreateAccountButton onPress={() => navigation.navigate('SignUp')}>
-          <Icon name="log-in" size={20} color="#ff9000" />
+          <Icon name="log-in" size={20} color="#FFAA00" />
           <CreateAccountButtonText>Criar uma conta</CreateAccountButtonText>
         </CreateAccountButton>
       </CreateAccountContainer>

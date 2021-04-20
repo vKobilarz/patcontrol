@@ -31,7 +31,7 @@ export const Container = styled.View<ContainerProps>`
     props.isFocused &&
     css`
       border-width: 2px;
-      border-color: #ff9000;
+      border-color: #ffaa00;
     `}
 `;
 

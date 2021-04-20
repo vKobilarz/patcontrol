@@ -20,7 +20,7 @@ export const BackToSignInContainer = styled.View`
   left: 0;
   bottom: 0;
   right: 0;
-  background: #312e38;
+  background: #282a36;
 `;
 
 export const BackToSignInButton = styled.TouchableOpacity`
