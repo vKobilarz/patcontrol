@@ -11,6 +11,7 @@ import CardTitle from '../../components/CardTitle';
 import PageContainer from '../../components/PageContainer';
 import PageTitleContainer from '../../components/PageTitleContainer';
 import PageTitle from '../../components/PageTitle';
+import Button from '../../components/Button';
 
 import Room from '../../interfaces/Room';
 
@@ -283,6 +284,8 @@ const RoomDetail: FC = () => {
             </CardRow>
           </CardBody>
         </CardContainer>
+
+        <Button iconName="search">Escanear sala</Button>
 
         <Table>
           <TableRow variant="title">

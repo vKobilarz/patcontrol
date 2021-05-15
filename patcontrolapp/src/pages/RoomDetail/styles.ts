@@ -19,6 +19,7 @@ export const Table = styled(View)`
   border-width: 3px;
   border-radius: 8px;
   padding: 4px 0px;
+  margin-top: 16px;
 `;
 
 export const TableRow = styled(View)<TableRowProps>`
