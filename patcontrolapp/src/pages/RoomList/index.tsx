@@ -13,67 +13,15 @@ import PageTitleContainer from '../../components/PageTitleContainer';
 import PageTitle from '../../components/PageTitle';
 
 import Room from '../../interfaces/Room';
-
-const roomsTest: Room[] = [
-  {
-    name: 'C102',
-    rfid: '123',
-    info: {
-      total: 30,
-      scanned: 22,
-      notFound: 3,
-      notRegistered: 5,
-      lastScan: new Date(),
-    },
-    status: {
-      hasError: true,
-    },
-  },
-  {
-    name: 'C103',
-    info: {
-      total: 40,
-      scanned: 33,
-      notFound: 6,
-      notRegistered: 1,
-      lastScan: new Date(),
-    },
-    status: {
-      hasError: true,
-    },
-  },
-  {
-    name: 'C104',
-    info: {
-      total: 23,
-      scanned: 22,
-      notFound: 1,
-      notRegistered: 0,
-      lastScan: new Date(),
-    },
-    status: {
-      hasError: true,
-    },
-  },
-  {
-    name: 'C105',
-    rfid: '1489',
-    info: {
-      total: 30,
-      scanned: 30,
-      notFound: 0,
-      notRegistered: 0,
-      lastScan: new Date(),
-    },
-    status: {
-      hasError: false,
-    },
-  },
-];
+import { usePatrimony } from '../../context/PatrimonyContext';
 
 const RoomList: FC = () => {
-  const [rooms, setRooms] = useState<Room[]>(roomsTest);
+  const { rooms } = usePatrimony();
   const navigation = useNavigation();
+
+  const handleOnRoomPress = (roomName: string) => {
+    navigation.navigate('RoomDetail', { roomName });
+  };
 
   return (
     <PageContainer>
@@ -87,9 +35,7 @@ const RoomList: FC = () => {
         {rooms.map((room) => (
           <CardButtonContainer
             key={room.name}
-            onPress={() => {
-              navigation.navigate('RoomDetail');
-            }}
+            onPress={() => handleOnRoomPress(room.name)}
           >
             <CardTitle error={room.status.hasError}>{room.name}</CardTitle>
             <CardBody>
@@ -111,7 +57,7 @@ const RoomList: FC = () => {
               </CardRow>
               <CardRow>
                 <CardText>Último Scan:</CardText>
-                <CardText>{moment().format('HH:mm DD/MM/YYYY')}</CardText>
+                <CardText>{room.info.formattedLastScan}</CardText>
               </CardRow>
             </CardBody>
           </CardButtonContainer>

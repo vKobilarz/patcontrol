@@ -128,7 +128,7 @@ const SignIn: FC = () => {
       </KeyboardAvoidingView>
 
       <CreateAccountContainer>
-        <CreateAccountButton onPress={() => navigation.navigate('RoomList')}>
+        <CreateAccountButton onPress={() => navigation.navigate('CsvReader')}>
           <Icon name="wifi-off" size={20} color="#FFAA00" />
           <CreateAccountButtonText>Modo Offline</CreateAccountButtonText>
         </CreateAccountButton>

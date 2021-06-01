@@ -7,6 +7,7 @@ import { Container, ButtonLabel } from './styles';
 interface ButtonProps extends RectButtonProperties {
   children: string;
   iconName?: string;
+  bottomGutter?: boolean;
 }
 
 const Button: FC<ButtonProps> = ({ children, iconName, ...rest }) => {

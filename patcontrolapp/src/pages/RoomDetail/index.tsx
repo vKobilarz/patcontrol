@@ -1,6 +1,7 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { ScrollView } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/Feather';
+import { useRoute, useNavigation } from '@react-navigation/core';
 import moment from 'moment';
 
 import CardContainer from '../../components/CardContainer';
@@ -22,236 +23,29 @@ import {
   TableBodyText,
   Table,
 } from './styles';
-
-const initRoom: Room = {
-  name: 'C102',
-  rfid: '123',
-  info: {
-    total: 30,
-    scanned: 22,
-    notFound: 3,
-    notRegistered: 5,
-    lastScan: new Date(),
-  },
-  status: {
-    hasError: true,
-  },
-  patrimonies: [
-    {
-      description: 'Mesa',
-      lastScannedDate: new Date(),
-      number: '1',
-      rfid: '154',
-      status: {
-        isFound: true,
-        isScanned: true,
-      },
-    },
-    {
-      description: 'Cadeira',
-      lastScannedDate: new Date(),
-      number: '2',
-      rfid: '156',
-      status: {
-        isFound: false,
-        isScanned: true,
-      },
-    },
-    {
-      description: 'Cadeira',
-      lastScannedDate: new Date(),
-      number: '3',
-      rfid: '156',
-      status: {
-        isFound: false,
-        isScanned: true,
-      },
-    },
-    {
-      description: 'Cadeira',
-      lastScannedDate: new Date(),
-      number: '4',
-      rfid: '156',
-      status: {
-        isFound: false,
-        isScanned: true,
-      },
-    },
-    {
-      description: 'Cadeira',
-      lastScannedDate: new Date(),
-      number: '5',
-      rfid: '156',
-      status: {
-        isFound: false,
-        isScanned: true,
-      },
-    },
-    {
-      description: 'Cadeira',
-      lastScannedDate: new Date(),
-      number: '6',
-      rfid: '156',
-      status: {
-        isFound: false,
-        isScanned: true,
-      },
-    },
-    {
-      description: 'Cadeira',
-      lastScannedDate: new Date(),
-      number: '7',
-      rfid: '156',
-      status: {
-        isFound: false,
-        isScanned: true,
-      },
-    },
-    {
-      description: 'Cadeira',
-      lastScannedDate: new Date(),
-      number: '8',
-      rfid: '156',
-      status: {
-        isFound: false,
-        isScanned: true,
-      },
-    },
-    {
-      description: 'Cadeira',
-      lastScannedDate: new Date(),
-      number: '9',
-      rfid: '156',
-      status: {
-        isFound: false,
-        isScanned: true,
-      },
-    },
-    {
-      description: 'Cadeira',
-      lastScannedDate: new Date(),
-      number: '10',
-      rfid: '156',
-      status: {
-        isFound: false,
-        isScanned: true,
-      },
-    },
-    {
-      description: 'Cadeira',
-      lastScannedDate: new Date(),
-      number: '11',
-      rfid: '156',
-      status: {
-        isFound: false,
-        isScanned: true,
-      },
-    },
-    {
-      description: 'Cadeira',
-      lastScannedDate: new Date(),
-      number: '12',
-      rfid: '156',
-      status: {
-        isFound: false,
-        isScanned: true,
-      },
-    },
-    {
-      description: 'Cadeira',
-      lastScannedDate: new Date(),
-      number: '13',
-      rfid: '156',
-      status: {
-        isFound: false,
-        isScanned: true,
-      },
-    },
-    {
-      description: 'Cadeira',
-      lastScannedDate: new Date(),
-      number: '14',
-      rfid: '156',
-      status: {
-        isFound: false,
-        isScanned: true,
-      },
-    },
-    {
-      description: 'Cadeira',
-      lastScannedDate: new Date(),
-      number: '15',
-      rfid: '156',
-      status: {
-        isFound: false,
-        isScanned: true,
-      },
-    },
-    {
-      description: 'Cadeira',
-      lastScannedDate: new Date(),
-      number: '16',
-      rfid: '156',
-      status: {
-        isFound: false,
-        isScanned: true,
-      },
-    },
-    {
-      description: 'Cadeira',
-      lastScannedDate: new Date(),
-      number: '17',
-      rfid: '156',
-      status: {
-        isFound: false,
-        isScanned: true,
-      },
-    },
-    {
-      description: 'Cadeira',
-      lastScannedDate: new Date(),
-      number: '18',
-      rfid: '156',
-      status: {
-        isFound: false,
-        isScanned: true,
-      },
-    },
-    {
-      description: 'Cadeira',
-      lastScannedDate: new Date(),
-      number: '19',
-      rfid: '156',
-      status: {
-        isFound: false,
-        isScanned: true,
-      },
-    },
-    {
-      description: 'Cadeira',
-      lastScannedDate: new Date(),
-      number: '20',
-      rfid: '156',
-      status: {
-        isFound: false,
-        isScanned: true,
-      },
-    },
-    {
-      description: '',
-      lastScannedDate: new Date(),
-      number: '',
-      rfid: '1566',
-      status: {
-        isFound: true,
-        isScanned: false,
-      },
-    },
-  ],
-};
+import { usePatrimony } from '../../context/PatrimonyContext';
 
 const RoomDetail: FC = () => {
-  const [room, setRoom] = useState<Room>(initRoom);
+  const { params } = useRoute();
+  const { goBack } = useNavigation();
+  const { getRoomByName } = usePatrimony();
+
+  const [room, setRoom] = useState<Room>();
+
+  useEffect(() => {
+    // @ts-ignore
+    const foundRoom = getRoomByName(params.roomName);
+
+    if (!foundRoom) {
+      goBack();
+
+      return;
+    }
+
+    setRoom(foundRoom);
+  });
+
+  if (!room) return null;
 
   return (
     <PageContainer>
@@ -280,7 +74,7 @@ const RoomDetail: FC = () => {
             </CardRow>
             <CardRow>
               <CardText>Último Scan:</CardText>
-              <CardText>{moment().format('HH:mm DD/MM/YYYY')}</CardText>
+              <CardText>{room.info.formattedLastScan}</CardText>
             </CardRow>
           </CardBody>
         </CardContainer>
