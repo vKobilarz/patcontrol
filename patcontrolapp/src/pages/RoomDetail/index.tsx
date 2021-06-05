@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useCallback, useEffect, useState } from 'react';
 import { ScrollView } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/Feather';
 import { useRoute, useNavigation } from '@react-navigation/core';
@@ -27,7 +27,7 @@ import { usePatrimony } from '../../context/PatrimonyContext';
 
 const RoomDetail: FC = () => {
   const { params } = useRoute();
-  const { goBack } = useNavigation();
+  const { goBack, navigate } = useNavigation();
   const { getRoomByName } = usePatrimony();
 
   const [room, setRoom] = useState<Room>();
@@ -44,6 +44,16 @@ const RoomDetail: FC = () => {
 
     setRoom(foundRoom);
   });
+
+  const handleRoomScanPress = useCallback(() => {
+    // @ts-ignore
+    navigate('RoomReader', { roomName: params.roomName });
+  }, []);
+
+  const handlePatrimonyPress = useCallback((patrimonyNumber, roomName) => {
+    // @ts-ignore
+    navigate('PatrimonyReader', { patrimonyNumber, roomName });
+  }, []);
 
   if (!room) return null;
 
@@ -79,7 +89,9 @@ const RoomDetail: FC = () => {
           </CardBody>
         </CardContainer>
 
-        <Button iconName="search">Escanear sala</Button>
+        <Button onPress={handleRoomScanPress} iconName="search">
+          Escanear sala
+        </Button>
 
         <Table>
           <TableRow variant="title">
@@ -88,7 +100,10 @@ const RoomDetail: FC = () => {
             <TableHeaderText width="60%">Descrição</TableHeaderText>
           </TableRow>
           {room.patrimonies.map((patrimony) => (
-            <TableRowButton key={patrimony.number}>
+            <TableRowButton
+              key={patrimony.number}
+              onPress={() => handlePatrimonyPress(patrimony.number, room.name)}
+            >
               <TableBodyText width="20%">
                 <Icon
                   name={patrimony.status.isFound ? 'check-square' : 'square'}

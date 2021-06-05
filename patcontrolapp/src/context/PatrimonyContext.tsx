@@ -1,5 +1,6 @@
 import React, { createContext, FC, useContext, useState } from 'react';
 import CsvPatrimony from '../interfaces/CsvPatrimony';
+import Patrimony from '../interfaces/Patrimony';
 import Room from '../interfaces/Room';
 import normalizeCsvPatrimony from '../utils/normalizeCsvPatrimony';
 import updateRoomsInfo from '../utils/updateRoomsInfo';
@@ -9,6 +10,12 @@ interface PatrimonyContextState {
   isImported: boolean;
   setCsvRooms(csvPatrimonies: CsvPatrimony[]): void;
   getRoomByName(roomName: string): Room | undefined;
+  getPatrimonyByNumber(params: IgetPatrimonyByNumber): Patrimony | undefined;
+}
+
+interface IgetPatrimonyByNumber {
+  roomName: string;
+  patrimonyNumber: string;
 }
 
 const PatrimonyContext = createContext<PatrimonyContextState>(
@@ -57,9 +64,28 @@ export const PatrimonyProvider: FC = ({ children }) => {
     return rooms.find((room) => room.name === roomName);
   };
 
+  const getPatrimonyByNumber = ({
+    patrimonyNumber,
+    roomName,
+  }: IgetPatrimonyByNumber): Patrimony | undefined => {
+    const room = getRoomByName(roomName);
+
+    if (!room) return;
+
+    return room.patrimonies?.find(
+      (patrimony) => patrimony.number === patrimonyNumber
+    );
+  };
+
   return (
     <PatrimonyContext.Provider
-      value={{ rooms, isImported, setCsvRooms, getRoomByName }}
+      value={{
+        rooms,
+        isImported,
+        setCsvRooms,
+        getRoomByName,
+        getPatrimonyByNumber,
+      }}
     >
       {children}
     </PatrimonyContext.Provider>

@@ -6,6 +6,8 @@ import SignUp from '../pages/SignUp';
 import RoomList from '../pages/RoomList';
 import RoomDetail from '../pages/RoomDetail';
 import CsvReader from '../pages/CsvReader';
+import PatrimonyReader from '../pages/PatrimonyReader';
+import RoomReader from '../pages/RoomReader';
 
 const Auth = createStackNavigator();
 
@@ -21,6 +23,8 @@ const AuthRoutes: FC = () => (
     <Auth.Screen name="RoomList" component={RoomList} />
     <Auth.Screen name="RoomDetail" component={RoomDetail} />
     <Auth.Screen name="CsvReader" component={CsvReader} />
+    <Auth.Screen name="PatrimonyReader" component={PatrimonyReader} />
+    <Auth.Screen name="RoomReader" component={RoomReader} />
   </Auth.Navigator>
 );
 
