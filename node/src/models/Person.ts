@@ -4,10 +4,10 @@ import {
   PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
-  OneToOne,
-  JoinColumn,
+  OneToMany,
 } from 'typeorm';
-import User from './User';
+import Patrimony from './Patrimony';
+import Room from './Room';
 
 @Entity('person')
 class Person {
@@ -15,13 +15,22 @@ class Person {
   id: string;
 
   @Column()
-  description: string;
+  name: string;
 
   @Column()
   email: string;
 
-  @OneToOne(() => User)
-  user: User;
+  @Column()
+  hashed_password: string;
+
+  @Column()
+  is_admin: boolean;
+
+  @OneToMany(() => Room, room => room.person)
+  rooms: Room[];
+
+  @OneToMany(() => Patrimony, patrimony => patrimony.person)
+  patrimonies: Patrimony[];
 
   @CreateDateColumn()
   created_at: Date;

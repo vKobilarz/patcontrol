@@ -1,31 +1,33 @@
 import {
-  Entity,
   Column,
-  PrimaryGeneratedColumn,
   CreateDateColumn,
-  UpdateDateColumn,
-  OneToOne,
+  Entity,
   JoinColumn,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
 } from 'typeorm';
+import Patrimony from './Patrimony';
 import Person from './Person';
 
-@Entity('users')
-class User {
+@Entity('room')
+class Room {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
   @Column()
-  description: string;
-
-  @Column()
-  password?: string;
+  name: string;
 
   @Column()
   person_id: string;
 
-  @OneToOne(() => Person)
+  @ManyToOne(() => Person)
   @JoinColumn({ name: 'person_id' })
   person: Person;
+
+  @OneToMany(() => Patrimony, patrimony => patrimony.person)
+  patrimonies: Patrimony[];
 
   @CreateDateColumn()
   created_at: Date;
@@ -34,4 +36,4 @@ class User {
   updated_at: Date;
 }
 
-export default User;
+export default Room;
