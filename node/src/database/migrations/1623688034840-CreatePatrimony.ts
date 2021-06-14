@@ -3,14 +3,13 @@ import {
   QueryRunner,
   Table,
   TableForeignKey,
-  TableIndex,
 } from 'typeorm';
 
-export class CreateUser1615046512896 implements MigrationInterface {
+export class CreatePatrimony1623688034840 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
-        name: 'user',
+        name: 'patrimony',
         columns: [
           {
             name: 'id',
@@ -22,14 +21,36 @@ export class CreateUser1615046512896 implements MigrationInterface {
           {
             name: 'description',
             type: 'varchar',
+            isNullable: true,
           },
           {
-            name: 'password',
+            name: 'number',
             type: 'varchar',
+            isNullable: true,
+          },
+          {
+            name: 'rfid',
+            type: 'varchar',
+            isNullable: true,
+          },
+          {
+            name: 'last_scanned_date',
+            type: 'timestamp',
+            isNullable: true,
+          },
+          {
+            name: 'last_found_date',
+            type: 'timestamp',
+            isNullable: true,
           },
           {
             name: 'person_id',
             type: 'uuid',
+          },
+          {
+            name: 'room_id',
+            type: 'uuid',
+            isNullable: true,
           },
           {
             name: 'created_at',
@@ -46,23 +67,27 @@ export class CreateUser1615046512896 implements MigrationInterface {
     );
 
     await queryRunner.createForeignKey(
-      'user',
+      'patrimony',
       new TableForeignKey({
+        name: 'fk_patrimony_room',
+        columnNames: ['room_id'],
+        referencedTableName: 'room',
+        referencedColumnNames: ['id'],
+      })
+    );
+
+    await queryRunner.createForeignKey(
+      'patrimony',
+      new TableForeignKey({
+        name: 'fk_patrimony_person',
         columnNames: ['person_id'],
         referencedTableName: 'person',
         referencedColumnNames: ['id'],
       })
     );
-
-    await queryRunner.createIndex(
-      'user',
-      new TableIndex({
-        columnNames: ['person_id'],
-      })
-    );
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable('user');
+    await queryRunner.dropTable('patrimony');
   }
 }

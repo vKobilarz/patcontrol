@@ -8,6 +8,7 @@ import RoomDetail from '../pages/RoomDetail';
 import CsvReader from '../pages/CsvReader';
 import PatrimonyReader from '../pages/PatrimonyReader';
 import RoomReader from '../pages/RoomReader';
+import BluetoothConfig from '../pages/BluetoothConfig';
 
 const Auth = createStackNavigator();
 
@@ -18,6 +19,7 @@ const AuthRoutes: FC = () => (
       cardStyle: { backgroundColor: '#282a36' },
     }}
   >
+    <Auth.Screen name="BluetoothConfig" component={BluetoothConfig} />
     <Auth.Screen name="SignIn" component={SignIn} />
     <Auth.Screen name="SignUp" component={SignUp} />
     <Auth.Screen name="RoomList" component={RoomList} />
