@@ -1,6 +1,5 @@
+import { getRepository } from 'typeorm';
 import { hash } from 'bcryptjs';
-
-import personRepository from '../../repository/personRepository';
 
 import Person from '../../models/Person';
 
@@ -14,6 +13,8 @@ interface Request {
 
 class CreatePersonService {
   public async execute({ email, name, password }: Request): Promise<Person> {
+    const personRepository = getRepository(Person);
+
     const checkPersonExists = await personRepository.findOne({
       where: { email },
     });

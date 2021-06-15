@@ -1,7 +1,6 @@
+import { getRepository } from 'typeorm';
 import { compare } from 'bcryptjs';
 import { sign } from 'jsonwebtoken';
-
-import personRepository from '../../repository/personRepository';
 
 import authConfig from '../../config/auth.config';
 
@@ -21,6 +20,8 @@ interface Response {
 
 class AuthenticatePersonService {
   public async execute({ name, password }: Request): Promise<Response> {
+    const personRepository = getRepository(Person);
+
     const person = await personRepository.findOne({ where: { name } });
 
     if (!person) {

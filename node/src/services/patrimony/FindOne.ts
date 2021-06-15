@@ -1,6 +1,5 @@
+import { getRepository } from 'typeorm';
 import { isUuid } from 'uuidv4';
-
-import patrimonyRepository from '../../repository/patrimonyRepository';
 
 import Patrimony from '../../models/Patrimony';
 
@@ -12,6 +11,8 @@ interface Request {
 
 class FindOnePatrimonyService {
   public async execute({ id }: Request): Promise<Patrimony> {
+    const patrimonyRepository = getRepository(Patrimony);
+
     if (!id) {
       throw new AppError('Patrimony ID not provided');
     }
