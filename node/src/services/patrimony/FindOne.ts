@@ -7,10 +7,11 @@ import AppError from '../../errors/AppError';
 
 interface Request {
   id: string;
+  personId: string;
 }
 
 class FindOnePatrimonyService {
-  public async execute({ id }: Request): Promise<Patrimony> {
+  public async execute({ id, personId }: Request): Promise<Patrimony> {
     const patrimonyRepository = getRepository(Patrimony);
 
     if (!id) {
@@ -22,7 +23,7 @@ class FindOnePatrimonyService {
     }
 
     const patrimony = await patrimonyRepository.findOne({
-      where: { id },
+      where: { id, person_id: personId },
       relations: ['room'],
     });
 
