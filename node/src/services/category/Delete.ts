@@ -1,28 +1,28 @@
-import { getRepository } from 'typeorm';
+// import { getRepository } from 'typeorm';
 
-import Category from '../../models/Category';
-import AppError from '../../errors/AppError';
+// import Category from '../../models/Category';
+// import AppError from '../../errors/AppError';
 
-interface Request {
-  id: string;
-}
+// interface Request {
+//   id: string;
+// }
 
-class DeleteCategoryService {
-  public async execute({ id }: Request): Promise<void> {
-    const repository = getRepository(Category);
+// class DeleteCategoryService {
+//   public async execute({ id }: Request): Promise<void> {
+//     const repository = getRepository(Category);
 
-    const checkCategoryExists = await repository.findOne({
-      where: { id },
-    });
+//     const checkCategoryExists = await repository.findOne({
+//       where: { id },
+//     });
 
-    if (!checkCategoryExists) {
-      throw new AppError(`Category with ID ${id} does not exists.`);
-    }
+//     if (!checkCategoryExists) {
+//       throw new AppError(`Category with ID ${id} does not exists.`);
+//     }
 
-    await repository.delete({
-      id,
-    });
-  }
-}
+//     await repository.delete({
+//       id,
+//     });
+//   }
+// }
 
-export default DeleteCategoryService;
+// export default DeleteCategoryService;

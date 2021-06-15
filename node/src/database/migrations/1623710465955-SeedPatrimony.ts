@@ -1,14 +1,13 @@
-import { getRepository, MigrationInterface, QueryRunner } from 'typeorm';
+import { MigrationInterface, QueryRunner } from 'typeorm';
+
+import personRepository from '../../repository/personRepository';
+import roomRepository from '../../repository/roomRepository';
+
 import Patrimony from '../../models/Patrimony';
-import Person from '../../models/Person';
-import Room from '../../models/Room';
+import patrimonyRepository from '../../repository/patrimonyRepository';
 
 export class SeedPatrimony1623710465955 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
-    const personRepository = getRepository<Person>('person');
-    const roomRepository = getRepository<Room>('room');
-    const patrimonyRepository = getRepository<Patrimony>('patrimony');
-
     const room: any = await roomRepository.findOne({
       where: { name: 'room01' },
     });

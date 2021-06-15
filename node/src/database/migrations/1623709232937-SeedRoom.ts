@@ -1,11 +1,12 @@
-import { getRepository, MigrationInterface, QueryRunner } from 'typeorm';
+import { MigrationInterface, QueryRunner } from 'typeorm';
+
+import personRepository from '../../repository/personRepository';
+import roomRepository from '../../repository/roomRepository';
+
 import roomSeed from '../seeds/room';
 
 export class SeedRoom1623709232937 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
-    const roomRepository = getRepository('room');
-    const personRepository = getRepository('person');
-
     const adminPerson: any = await personRepository.findOne({
       where: { email: 'user@admin.com' },
     });

@@ -1,9 +1,9 @@
 import { Router } from 'express';
 
-import tagRouter from './tag.routes';
+import patrimonyRouter from './patrimony.routes';
 
 const routes = Router();
 
-routes.use('/tag', tagRouter);
+routes.use('/patrimony', patrimonyRouter);
 
 export default routes;

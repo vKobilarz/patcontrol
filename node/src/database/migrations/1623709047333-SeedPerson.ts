@@ -1,10 +1,11 @@
-import { getRepository, MigrationInterface, QueryRunner } from 'typeorm';
+import { MigrationInterface, QueryRunner } from 'typeorm';
+
+import personRepository from '../../repository/personRepository';
+
 import personSeed from '../seeds/person';
 
 export class SeedPerson1623709047333 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
-    const personRepository = getRepository('person');
-
     personRepository.save(personSeed);
   }
 
