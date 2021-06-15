@@ -32,8 +32,11 @@ class CreatePersonService {
       is_admin: false,
     });
 
+    
     await personRepository.save(person);
-
+    
+    delete person.hashed_password;
+    
     return person;
   }
 }

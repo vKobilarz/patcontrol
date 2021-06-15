@@ -9,7 +9,7 @@ import Person from '../../models/Person';
 import AppError from '../../errors/AppError';
 
 interface Request {
-  name: string;
+  email: string;
   password: string;
 }
 
@@ -19,10 +19,10 @@ interface Response {
 }
 
 class AuthenticatePersonService {
-  public async execute({ name, password }: Request): Promise<Response> {
+  public async execute({ email, password }: Request): Promise<Response> {
     const personRepository = getRepository(Person);
 
-    const person = await personRepository.findOne({ where: { name } });
+    const person = await personRepository.findOne({ where: { email } });
 
     if (!person) {
       throw new AppError('Incorrect email/password combination', 401);
@@ -30,6 +30,10 @@ class AuthenticatePersonService {
 
     if (!password) {
       throw new AppError('Password not provided', 401);
+    }
+
+    if (!person.hashed_password) {
+      throw new AppError('User does not have a password', 401);
     }
 
     const passwordMatched = await compare(password, person.hashed_password);
@@ -44,6 +48,8 @@ class AuthenticatePersonService {
       subject: person.id,
       expiresIn,
     });
+
+    delete person.hashed_password;
 
     return { person, token };
   }

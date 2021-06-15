@@ -21,7 +21,7 @@ class Person {
   email: string;
 
   @Column()
-  hashed_password: string;
+  hashed_password?: string;
 
   @Column()
   is_admin: boolean;
