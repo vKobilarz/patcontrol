@@ -5,16 +5,15 @@
 // PINS
 #define RFID_RST_PIN 5
 #define RFID_SS_PIN 10
-#define LED_PIN 8
-#define BT_RX_PIN 2
-#define BT_TX_PIN 3
+#define BUZZER_PIN 8
+#define LED_R_PIN 2
+#define LED_G_PIN 3
+#define LED_B_PIN 4
 #define BAUD_RATE 9600
 
 MFRC522 rfid(RFID_SS_PIN, RFID_RST_PIN);
 MFRC522::MIFARE_Key key;
 byte nuidPICC[4];
-
-SoftwareSerial bt(BT_RX_PIN ,BT_TX_PIN);
 
 int currentState = 2;
 // 0 -> Inactive
@@ -26,7 +25,6 @@ String lastRfidUid = "";
 
 void setup() {
   Serial.begin(BAUD_RATE);
-  bt.begin(BAUD_RATE);
   SPI.begin();
   rfid.PCD_Init();
 
@@ -34,10 +32,12 @@ void setup() {
     key.keyByte[i] = 0xFF;
   }
 
-  pinMode(LED_PIN, OUTPUT);
-  pinMode(BT_RX_PIN, INPUT);
-  pinMode(BT_TX_PIN, OUTPUT);
-
+  pinMode(BUZZER_PIN, OUTPUT);
+  
+  pinMode(LED_R_PIN, OUTPUT);
+  pinMode(LED_G_PIN, OUTPUT);
+  pinMode(LED_B_PIN, OUTPUT);
+  
   Serial.println("Initialized!");
 }
 
@@ -50,10 +50,27 @@ String stateToString(int state) {
   }
 }
 
+void handleStateChange(int currentState) {
+  digitalWrite(LED_R_PIN, LOW);
+  digitalWrite(LED_G_PIN, LOW);
+  digitalWrite(LED_B_PIN, LOW);
+
+  switch (currentState) {
+    case 0: digitalWrite(LED_R_PIN, HIGH);
+      break;
+    case 1: digitalWrite(LED_G_PIN, HIGH);
+      break;
+    case 2: digitalWrite(LED_B_PIN, HIGH);
+      break;
+  }
+}
+
 void checkStateChange() {
   if (currentState != previousState) {
     String message = "[Status Change] " + stateToString(previousState);
     message += " -> " + stateToString(currentState);
+
+    handleStateChange(currentState);
     
     Serial.println(message);
   }
@@ -128,26 +145,27 @@ void roomScanning() {
 
 void patrimonyScanning() {
     if (readRfid()) {
-      digitalWrite(LED_PIN, HIGH);
+      digitalWrite(BUZZER_PIN, HIGH);
+      delay(100);
     } else {
-      digitalWrite(LED_PIN, LOW);
+      digitalWrite(BUZZER_PIN, LOW);
     };
 }
 
 void readBluetoothSerial() {
-  String bluetoothMessage = "";
-
+//  String bluetoothMessage = "";
+//
 //  int btMessageLength = bt.available();
-    
-  while (bt.available() > 0) {
-    char asciiChar = bt.read();
-
-    bluetoothMessage += asciiChar;
-  }
-
-  if (bluetoothMessage != "") {
-  Serial.println("[BT MESSAGE] " + bluetoothMessage);
-  }
+//    
+//  while (bt.available() > 0) {
+//    char asciiChar = bt.read();
+//
+//    bluetoothMessage += asciiChar;
+//  }
+//
+//  if (bluetoothMessage != "") {
+//  Serial.println("[BT MESSAGE] " + bluetoothMessage);
+//  }
 }
 
 void loop() {
