@@ -18,7 +18,7 @@ class UpdateRoomService {
     });
 
     if (!checkRoomExists) {
-      throw new AppError(`Category with ID ${id} does not exists.`);
+      throw new AppError(`Room with ID ${id} does not exists.`);
     }
 
     await repository.update({ id, person_id: personId }, { name });
@@ -28,7 +28,7 @@ class UpdateRoomService {
     });
 
     if (!room) {
-      throw new AppError('Exception while updating category.');
+      throw new AppError('Exception while updating room.');
     }
 
     return room;
