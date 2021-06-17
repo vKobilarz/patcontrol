@@ -11,6 +11,7 @@ class FindRoomService {
 
     const rooms = await roomRepository.find({
       where: { person_id: personId },
+      relations: ['patrimonies'],
     });
 
     return rooms;

@@ -24,6 +24,7 @@ class FindOneRoomService {
 
     const room = await roomRepository.findOne({
       where: { id, person_id: personId },
+      relations: ['patrimonies'],
     });
 
     if (!room) {

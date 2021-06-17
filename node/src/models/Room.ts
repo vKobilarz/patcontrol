@@ -26,7 +26,7 @@ class Room {
   @JoinColumn({ name: 'person_id' })
   person: Person;
 
-  @OneToMany(() => Patrimony, patrimony => patrimony.person)
+  @OneToMany(() => Patrimony, patrimony => patrimony.room)
   patrimonies: Patrimony[];
 
   @CreateDateColumn()
