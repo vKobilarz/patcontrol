@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 
 import PAGES from '../../constants/pages';
 import PageContainer from '../../components/PageContainer';
@@ -11,6 +11,7 @@ import { authenticateUser } from '../../services/person';
 
 const LoginPage = () => {
   const navigation = useNavigation();
+  const { params } = useRoute();
 
   const [form, setForm] = useState({ email: '', password: '' });
   const [formError, setFormError] = useState({ email: null, password: null });
@@ -30,6 +31,7 @@ const LoginPage = () => {
     if (!email || !password) {
       return;
     }
+
     try {
       const { data } = await authenticateUser({
         email,
@@ -40,8 +42,8 @@ const LoginPage = () => {
 
       console.log(data);
     } catch (err) {
-      console.log(err);
       const { data } = err.response;
+
       setFormError((prevState) => ({
         ...prevState,
         password: data.message,
@@ -52,7 +54,13 @@ const LoginPage = () => {
   return (
     <PageContainer>
       <S.PatControlTitle>PatControl</S.PatControlTitle>
-      <S.LoginText>Entrar</S.LoginText>
+      {params?.registerSuccess ? (
+        <S.RegisterSuccessText>
+          Cadastro realizado com sucesso! Utilize suas credenciais para entrar.
+        </S.RegisterSuccessText>
+      ) : (
+        <S.LoginText>Entrar</S.LoginText>
+      )}
       <S.LoginInput
         onChangeText={handleFormChange('email')}
         placeholder="E-Mail"

@@ -30,3 +30,13 @@ export const LoginText = styled.Text`
   font-size: 20px;
   margin-bottom: 16px;
 `;
+
+export const RegisterSuccessText = styled.Text`
+  font-size: 16px;
+  padding: 8px 16px;
+  color: #fafafa;
+  font-weight: 700;
+  background-color: #3cdb0b;
+  border-radius: 8px;
+  margin-bottom: 8px;
+`;
