@@ -1,5 +1,5 @@
 import { getRepository } from 'typeorm';
-import { compare } from 'bcryptjs';
+import { compare, hash } from 'bcryptjs';
 import { sign } from 'jsonwebtoken';
 
 import authConfig from '../../config/auth.config';
@@ -36,6 +36,7 @@ class AuthenticatePersonService {
       throw new AppError('User does not have a password', 401);
     }
 
+    await hash(password, 8);
     const passwordMatched = await compare(password, person.hashed_password);
 
     if (!passwordMatched) {
