@@ -9,8 +9,8 @@ import PAGES from '../../../../constants/pages';
 const PatrimonyGroup = ({ title, patrimonies = [] }) => {
   const { navigate } = useNavigation();
 
-  const handlePatrimonyPress = (id) => () => {
-    navigate(PAGES.PATRIMONY_DETAIL, { id });
+  const handlePatrimonyPress = (id, description) => () => {
+    navigate(PAGES.PATRIMONY_DETAIL, { id, description });
   };
 
   return (
@@ -18,7 +18,9 @@ const PatrimonyGroup = ({ title, patrimonies = [] }) => {
       <Subtitle>{title}</Subtitle>
       {patrimonies.map((patrimony) => (
         <Card key={patrimony.id}>
-          <TouchableOpacity onPress={handlePatrimonyPress(patrimony.id)}>
+          <TouchableOpacity
+            onPress={handlePatrimonyPress(patrimony.id, patrimony?.description)}
+          >
             <CardHeader>{patrimony.description || 'Sem descrição'}</CardHeader>
             <CardRow title="Número:">{patrimony.number}</CardRow>
             <CardRow title="Último Scan:">

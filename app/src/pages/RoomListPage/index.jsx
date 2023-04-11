@@ -6,6 +6,7 @@ import PageContainer from '../../components/PageContainer';
 import { useNavigation } from '@react-navigation/native';
 import PAGES from '../../constants/pages';
 import formatDateToString from '../../utils/formatDateToString';
+import PageAction from '../../components/PageAction';
 
 const RoomListPage = () => {
   const { navigate } = useNavigation();
@@ -15,9 +16,16 @@ const RoomListPage = () => {
     navigate(PAGES.ROOM_DETAIL, { id, name });
   };
 
+  const handleTouchNewRoom = () => {
+    console.warn('handleTouchNewRoom not implemented yet');
+  };
+
   return (
     <PageContainer>
       <PageHeader title="Salas" isBackHidden />
+      <TouchableOpacity onPress={handleTouchNewRoom}>
+        <PageAction>Cadastrar Sala</PageAction>
+      </TouchableOpacity>
       <View>
         {data?.map((room) => (
           <Card key={room.id}>

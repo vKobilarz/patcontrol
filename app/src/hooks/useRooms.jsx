@@ -38,14 +38,14 @@ const offlineHandler = async () => {
   console.warn('UseRooms / offlineHandler -> Not implemented yet');
 };
 
+const handlers = {
+  [AUTHENTICATION_TYPE.ONLINE]: onlineHandler,
+  [AUTHENTICATION_TYPE.OFFLINE]: offlineHandler,
+};
+
 const useRooms = () => {
   const { authenticationType } = useAuthentication();
   const [data, setData] = useState();
-
-  const handlers = {
-    [AUTHENTICATION_TYPE.ONLINE]: onlineHandler,
-    [AUTHENTICATION_TYPE.OFFLINE]: offlineHandler,
-  };
 
   useEffect(() => {
     const getRooms = handlers[authenticationType];
