@@ -10,8 +10,6 @@ const RoomDetailPage = () => {
   const { params } = useRoute();
   const { data } = useRoomById(params.id);
 
-  console.log(data?.formattedPatrimonies.scanned);
-
   return (
     <PageContainer>
       <PageHeader title={`Sala ${params.name}`} />

@@ -43,7 +43,6 @@ const LoginPage = () => {
 
       setFormError({ email: null, password: null });
 
-      console.log(data);
       authenticate({
         authenticationType: AUTHENTICATION_TYPE.ONLINE,
         person: data.person,

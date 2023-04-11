@@ -14,6 +14,7 @@ import RoomScanningPage from '../pages/RoomScanningPage';
 import useAuthentication from '../hooks/useAuthentication';
 import { useEffect } from 'react';
 import AUTHENTICATION_TYPE from '../constants/authenticationType';
+import PatrimonyDetailPage from '../pages/PatrimonyDetailPage';
 
 const headerOptions = {
   header: () => {
@@ -79,6 +80,11 @@ const RoutesProvider = () => {
       <Stack.Screen
         name={PAGES.PATRIMONY_SCANNING}
         component={PatrimonyScanningPage}
+        options={headerOptions}
+      />
+      <Stack.Screen
+        name={PAGES.PATRIMONY_DETAIL}
+        component={PatrimonyDetailPage}
         options={headerOptions}
       />
     </Stack.Navigator>
