@@ -5,6 +5,7 @@ import Card, { CardHeader, CardRow } from '../../components/Card';
 import PageContainer from '../../components/PageContainer';
 import { useNavigation } from '@react-navigation/native';
 import PAGES from '../../constants/pages';
+import formatDateToString from '../../utils/formatDateToString';
 
 const RoomListPage = () => {
   const { navigate } = useNavigation();
@@ -29,7 +30,7 @@ const RoomListPage = () => {
               </CardRow>
               <CardRow title="Total:">{room.info.total}</CardRow>
               <CardRow title="Último scan:">
-                {room.info.formattedLastScan}
+                {formatDateToString(room.last_scanned_date)}
               </CardRow>
             </TouchableOpacity>
           </Card>

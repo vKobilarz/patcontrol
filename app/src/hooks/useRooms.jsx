@@ -12,12 +12,10 @@ const updateRoomsWithInfo = (rooms) => {
     );
 
     const notFoundPatrimonies = patrimonies.filter(
-      (pat) => !!pat.last_scanned_date && !pat.rfid,
-    );
-
-    const notRegisteredPatrimonies = patrimonies.filter(
       (pat) => !pat.last_scanned_date && !!pat.rfid,
     );
+
+    const notRegisteredPatrimonies = patrimonies.filter((pat) => !pat.rfid);
 
     return {
       ...room,
@@ -27,9 +25,6 @@ const updateRoomsWithInfo = (rooms) => {
         scanned: scannedPatrimonies.length,
         notFound: notFoundPatrimonies.length,
         notRegistered: notRegisteredPatrimonies.length,
-        formattedLastScan: room.last_scanned_date
-          ? room.last_scanned_date
-          : '-',
       },
     };
   });
