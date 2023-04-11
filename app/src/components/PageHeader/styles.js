@@ -16,7 +16,7 @@ export const PageTitle = styled.Text`
   margin-top: 16px;
   margin-bottom: 16px;
   margin-left: 16px;
-  font-size: 20px;
+  font-size: 24px;
   font-weight: 600;
 `;
 

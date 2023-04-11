@@ -5,8 +5,8 @@ import React, {
   useEffect,
   useState,
 } from 'react';
-import AUTHENTICATION_TYPE from '../constants/authenticationType';
 import LOCAL_STORAGE_KEYS from '../constants/localStorage';
+import PatrimonyApi from '../services/patrimonyApi';
 
 export const AuthenticationContext = createContext({});
 
@@ -26,6 +26,10 @@ const AuthenticationProvider = ({ children }) => {
       LOCAL_STORAGE_KEYS.PATCONTROL_AUTHENTICATION_DATA,
       JSON.stringify({ authenticationType, token, person }),
     );
+
+    if (token) {
+      PatrimonyApi.defaults.headers.authorization = `Bearer ${token}`;
+    }
   }, [authenticationData]);
 
   const authenticate = ({ authenticationType, token, person }) => {
