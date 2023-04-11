@@ -1,6 +1,7 @@
 import { useState } from 'react';
 
 import { useNavigation, useRoute } from '@react-navigation/native';
+import useAuthentication from '../../hooks/useAuthentication';
 
 import PAGES from '../../constants/pages';
 import PageContainer from '../../components/PageContainer';
@@ -8,10 +9,12 @@ import Button from '../../components/Button';
 
 import * as S from './styles';
 import { authenticateUser } from '../../services/person';
+import AUTHENTICATION_TYPE from '../../constants/authenticationType';
 
 const LoginPage = () => {
   const navigation = useNavigation();
   const { params } = useRoute();
+  const { authenticate } = useAuthentication();
 
   const [form, setForm] = useState({ email: '', password: '' });
   const [formError, setFormError] = useState({ email: null, password: null });
@@ -41,6 +44,11 @@ const LoginPage = () => {
       setFormError({ email: null, password: null });
 
       console.log(data);
+      authenticate({
+        authenticationType: AUTHENTICATION_TYPE.ONLINE,
+        person: data.person,
+        token: data.token,
+      });
     } catch (err) {
       const { data } = err.response;
 
@@ -49,6 +57,10 @@ const LoginPage = () => {
         password: data.message,
       }));
     }
+  };
+
+  const handleOfflineMode = () => {
+    authenticate({ authenticationType: AUTHENTICATION_TYPE.OFFLINE });
   };
 
   return (
@@ -83,7 +95,7 @@ const LoginPage = () => {
         onPress={() => navigation.navigate(PAGES.REGISTER)}
       />
       <S.OrText>ou</S.OrText>
-      <Button title="Continue offline" />
+      <Button title="Continue offline" onPress={handleOfflineMode} />
     </PageContainer>
   );
 };

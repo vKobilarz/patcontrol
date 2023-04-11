@@ -11,6 +11,7 @@ import RegisterPage from './src/pages/RegisterPage';
 import RoomDetailPage from './src/pages/RoomDetailPage';
 import RoomListPage from './src/pages/RoomListPage';
 import RoomScanningPage from './src/pages/RoomScanningPage';
+import AuthenticationProvider from './src/context/Authentication';
 
 const Stack = createNativeStackNavigator();
 
@@ -22,7 +23,7 @@ const headerOptions = {
 
 const App = () => {
   return (
-    <>
+    <AuthenticationProvider>
       <StatusBar style="auto" />
       <NavigationContainer>
         <Stack.Navigator>
@@ -68,7 +69,7 @@ const App = () => {
           />
         </Stack.Navigator>
       </NavigationContainer>
-    </>
+    </AuthenticationProvider>
   );
 };
 

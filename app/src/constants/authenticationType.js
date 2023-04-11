@@ -1,0 +1,7 @@
+const AUTHENTICATION_TYPE = {
+  ONLINE: 'ONLINE',
+  OFFLINE: 'OFFLINE',
+  NONE: 'NONE',
+};
+
+export default AUTHENTICATION_TYPE;
